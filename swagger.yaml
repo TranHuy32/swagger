@@ -1,12 +1,12 @@
 swagger: '2.0'
 info:
-  title: User Authentication API
+  title: Store API
   version: 1.0.0
 paths:
   /users-auth/login:
     post:
       tags:
-        - users-auth
+        - users-auth  
       summary: User Login
       operationId: userLogin
       description: Authenticate user and generate access token and refresh token.
@@ -23,12 +23,15 @@ paths:
             type: object
             properties:
               UserName:
+                required: true
                 type: string
                 example: "adminDONGTAC"
               PassWord:
+                required: true
                 type: string
                 example: "1"
               MaDV:
+                required: true
                 type: string
                 example: "DONGTAC"
       responses:
