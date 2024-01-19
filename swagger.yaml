@@ -2,6 +2,15 @@ swagger: '2.0'
 info:
   title: Store API
   version: 1.0.0
+tags:
+- name: users-auth
+  description: Api login
+- name: categories
+  description: Api categories
+- name: products
+  description: Api products
+- name: customers
+  description: Api customers
 paths:
   /users-auth/login:
     post:
@@ -22,15 +31,15 @@ paths:
           schema:
             type: object
             properties:
-              UserName:
+              username:
                 required: true
                 type: string
                 example: "adminDONGTAC"
-              PassWord:
+              passwsord:
                 required: true
                 type: string
                 example: "1"
-              MaDV:
+              organizationId:
                 required: true
                 type: string
                 example: "DONGTAC"
@@ -46,6 +55,266 @@ paths:
               refreshToken:
                 type: string
                 example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        401:
+          description: Unauthorized - Invalid credentials
+        500:
+          description: Internal Server Error - Unable to process the request
+  /categories:
+    get:
+      tags:
+        - categories  
+      summary: Get All Categories
+      operationId: getAllCategories
+      description: Get all categories
+      security:
+        - OAuth2:
+      consumes:
+        - application/json
+      produces:
+        - application/json      
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          format: JWT
+          required: true
+        - in: body
+          name: getAllCategories
+          description: Get all categories
+          required: true
+          schema:
+            type: object
+            properties:
+              page:
+                type: number
+                example: "1"
+              pageSize:
+                type: number
+                example: "10"
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: object
+            properties:
+              success:
+                type: number
+                example: 1
+              data:
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "ffafafa61fa5faf"
+                        name:
+                          type: string
+                          example: "Trà sữa"
+                      required:
+                        - id
+                        - name
+                  total:
+                    type: number
+                    example: 30
+        401:
+          description: Unauthorized - Invalid credentials
+        500:
+          description: Internal Server Error - Unable to process the request
+  /products:
+    get:
+      tags:
+        - products  
+      summary: Get All Products
+      operationId: getAllProducts
+      description: Get all Products
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          format: JWT
+          required: true
+        - in: body
+          name: getAllProducts
+          description: Get all products
+          required: true
+          schema:
+            type: object
+            properties:
+              page:
+                type: number
+                example: "1"
+              pageSize:
+                type: number
+                example: "10"
+              search:
+                type: string
+                example: "ông thọ"
+              categoryId:
+                type: string
+                example: "ffafafa61fa5faf"
+              isBestSeller:
+                type: boolean
+                example: "true"
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: object
+            properties:
+              success:
+                type: number
+                example: 1
+              data:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "ffafafa61fa5faf"
+                        name:
+                          type: string
+                          example: "sữa ông thọ"
+                        image:
+                          type: string
+                          example: "assets/images/ic_logo_transparent.png"
+                        price:
+                          type: number
+                          example: "20000"
+                        discountRate:
+                          type: number
+                          example: "2"
+                        unit:
+                          type: string
+                          example: "vnđ"
+                        remainQuanlity:
+                          type: number
+                          example: "27"
+                        category:
+                          type: object
+                          properties:
+                            id:
+                              type: object
+                              example: "ffafafa61fa5faf"
+                            name:
+                              type: string
+                              example: "Sữa"
+                      required:
+                        - id
+                        - name
+                  total:
+                    type: number
+                    example: 30
+        401:
+          description: Unauthorized - Invalid credentials
+        500:
+          description: Internal Server Error - Unable to process the request
+  /customers:
+    get:
+      tags:
+        - customers  
+      summary: Get All Customers
+      operationId: getAllCustomers
+      description: Get all Customers
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          format: JWT
+          required: true
+        - in: body
+          name: getAllCustomers
+          description: Get all customers
+          required: true
+          schema:
+            type: object
+            properties:
+              page:
+                type: number
+                example: "1"
+              pageSize:
+                type: number
+                example: "10"
+              search:
+                type: string
+                example: "0974825159, HuyTran"
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: object
+            properties:
+              success:
+                type: number
+                example: 1
+              data:
+                type: object
+                properties:
+                  customers:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "ffafafa61fa5faf"
+                        name:
+                          type: string
+                          example: "Tran Xuan Huy"
+                        phoneNumber:
+                          type: string
+                          example: "0974821569"
+                        email:
+                          type: string
+                          example: "tranxuanhuy3201@gmail.com"
+                        tin:
+                          type: string
+                          example: "23123"
+                        sex:
+                          type: string
+                          example: "male or female"
+                        address:
+                          type: string
+                          example: "ngõ 20 Hồ Tùng Mậu"
+                        numOfPurchases:
+                          type: number
+                          example: "20"
+                        favoriteProduct:
+                          type: object
+                          properties:
+                            id:
+                              type: object
+                              example: "ffafafa61fa5faf"
+                            name:
+                              type: string
+                              example: "Sữa ông thọ"
+                      required:
+                        - id
+                        - name
+                  total:
+                    type: number
+                    example: 30
         401:
           description: Unauthorized - Invalid credentials
         500:
