@@ -11,6 +11,8 @@ tags:
   description: Api products
 - name: customers
   description: Api customers
+- name: orders
+  description: Api orders
 paths:
   /users-auth/login:
     post:
@@ -39,10 +41,6 @@ paths:
                 required: true
                 type: string
                 example: "1"
-              organizationId:
-                required: true
-                type: string
-                example: "DONGTAC"
       responses:
         200:
           description: Successful login
@@ -59,7 +57,7 @@ paths:
           description: Unauthorized - Invalid credentials
         500:
           description: Internal Server Error - Unable to process the request
-  /categories:
+  /categories/all:
     get:
       tags:
         - categories  
@@ -126,7 +124,7 @@ paths:
           description: Unauthorized - Invalid credentials
         500:
           description: Internal Server Error - Unable to process the request
-  /products:
+  /products/all:
     get:
       tags:
         - products  
@@ -190,6 +188,9 @@ paths:
                         name:
                           type: string
                           example: "sữa ông thọ"
+                        productCode:
+                          type: string
+                          example: "23213123"
                         image:
                           type: string
                           example: "assets/images/ic_logo_transparent.png"
@@ -224,7 +225,7 @@ paths:
           description: Unauthorized - Invalid credentials
         500:
           description: Internal Server Error - Unable to process the request
-  /customers:
+  /customers/all:
     get:
       tags:
         - customers  
@@ -315,6 +316,208 @@ paths:
                   total:
                     type: number
                     example: 30
+        401:
+          description: Unauthorized - Invalid credentials
+        500:
+          description: Internal Server Error - Unable to process the request
+  /customers/create:
+    post:
+      tags:
+        - customers  
+      summary: Create New Customer
+      operationId: createNewCustomer
+      description: Create New Customer
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          format: JWT
+          required: true
+        - in: body
+          name: createNewCustomer
+          description: Create New Customer
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "Nguyễn Văn Dũng"
+              phoneNumber:
+                type: string
+                example: "0951485218"
+              address:
+                type: string
+                example: "phố 2, thị trấn Liễu Đề"
+              email:
+                type: string
+                example: "huytran@gmail.com"
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: object
+            properties:
+              success:
+                type: number
+                example: 1
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "fafa2"
+                  name:
+                    type: string
+                    example: "Nguyễn Văn Dũng"
+                  phoneNumber:
+                    type: string
+                    example: "0951485218"
+                  address:
+                    type: string
+                    example: "phố 2, thị trấn Liễu Đề"
+                  email:
+                    type: string
+                    example: "huytran@gmail.com"
+                  numOfPurchases:
+                    type: number
+                    example: 20
+                  favorite:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "ffafafa61fa5faf"
+                        productCode:
+                          type: string
+                          example: "1534174"
+                        name:
+                          type: string
+                          example: "Tran Xuan Huy"
+                        image:
+                          type: string
+                          example: "assets/images/ic_logo_transparent.png"
+                        price:
+                          type: number
+                          example: 20000
+                        discountRate:
+                          type: number
+                          example: 3
+                        unit:
+                          type: string
+                          example: "vnđ"
+                        remainQuanlity:
+                          type: number
+                          example: 45
+                        category:
+                          type: object
+                          properties:
+                            id:
+                              type: object
+                              example: "ffafafa61fa5faf"
+                            name:
+                              type: string
+                              example: "Sữa"
+        401:
+          description: Unauthorized - Invalid credentials
+        500:
+          description: Internal Server Error - Unable to process the request
+  /orders/create:
+    post:
+      tags:
+        - orders  
+      summary: Create New Order
+      operationId: createNewOrder
+      description: Create New Order
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          format: JWT
+          required: true
+        - in: body
+          name: createNewOrder
+          description: Create New Order
+          required: true
+          schema:
+            type: object
+            properties:
+              customerId:
+                type: string
+                example: "3123123213ascasc"
+              order:
+                type: array
+                example: "[123123213, 123123123]"
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: object
+            properties:
+              success:
+                type: number
+                example: 1
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "fafa2"
+                  customerId:
+                    type: string
+                    example: "adasdas213123"
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          example: "ffafafa61fa5faf"
+                        productCode:
+                          type: string
+                          example: "1534174"
+                        name:
+                          type: string
+                          example: "Tran Xuan Huy"
+                        image:
+                          type: string
+                          example: "assets/images/ic_logo_transparent.png"
+                        price:
+                          type: number
+                          example: 20000
+                        discountRate:
+                          type: number
+                          example: 3
+                        unit:
+                          type: string
+                          example: "vnđ"
+                        remainQuanlity:
+                          type: number
+                          example: 45
+                        category:
+                          type: object
+                          properties:
+                            id:
+                              type: object
+                              example: "ffafafa61fa5faf"
+                            name:
+                              type: string
+                              example: "Sữa"
         401:
           description: Unauthorized - Invalid credentials
         500:
