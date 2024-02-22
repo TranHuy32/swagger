@@ -571,9 +571,6 @@ paths:
                       quantity:
                         type: number
                         example: 2
-              orderDetail:
-                type: array
-                example: "[123123213, 123123123]"
       responses:
         200:
           description: Successful
@@ -589,9 +586,18 @@ paths:
                   id:
                     type: string
                     example: "fafa2"
-                  customerId:
-                    type: string
-                    example: "adasdas213123"
+                  customer:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: "8d4e35c2-90a6-4712-8089-1cfee837ac53"
+                      name:
+                        type: string
+                        example: "Nguyen Ngoc Dung"
+                      phonenumber:
+                        type: string
+                        example: "0942747548"
                   products:
                     type: array
                     items:
@@ -600,36 +606,45 @@ paths:
                         id:
                           type: string
                           example: "ffafafa61fa5faf"
-                        productCode:
-                          type: string
-                          example: "1534174"
-                        name:
-                          type: string
-                          example: "Tran Xuan Huy"
-                        image:
-                          type: string
-                          example: "assets/images/ic_logo_transparent.png"
-                        price:
+                        quantity:
                           type: number
-                          example: 20000
-                        discountRate:
-                          type: number
-                          example: 3
-                        unit:
-                          type: string
-                          example: "vnđ"
-                        remainQuanlity:
-                          type: number
-                          example: 45
-                        category:
+                          example: 1
+                        products:
                           type: object
                           properties:
                             id:
                               type: string
-                              example: "ffafafa61fa5faf"
+                              example: "655c97c7e5805c98945c213s"
                             name:
                               type: string
-                              example: "Sữa"
+                              example: "sữa ông thọ"
+                            productCode:
+                              type: string
+                              example: "ABCDT"
+                            price:
+                              type: number
+                              example: 20000
+                            discountRate:
+                              type: number
+                              example: 2
+                            image:
+                              type: string
+                              example: "http://117.4.194.207:3002/image/bffa43d665ddac28d42ff0f291553f4a.jpg"
+                            unit:
+                              type: string
+                              example: "vnđ"
+                            remainQuanlity:
+                              type: number
+                              example: 45
+                            category:
+                              type: object
+                              properties:
+                                id:
+                                  type: string
+                                  example: "a8f51290-aa19-4c96-8f4f-e814ecbcdea2"
+                                name:
+                                  type: string
+                                  example: "Sữa"
         401:
           description: Unauthorized - Invalid credentials
         500:
