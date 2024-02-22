@@ -558,7 +558,20 @@ paths:
               customerId:
                 type: string
                 example: "3123123213ascasc"
-              order:
+              totalPrice:
+                type: number
+                example: 50000
+              orderDetail:
+                  type: array
+                  items:
+                    properties:
+                      productId:
+                        type: string
+                        example: "655c97c7e5805c98945c656s"
+                      quantity:
+                        type: number
+                        example: 2
+              orderDetail:
                 type: array
                 example: "[123123213, 123123123]"
       responses:
@@ -612,7 +625,7 @@ paths:
                           type: object
                           properties:
                             id:
-                              type: object
+                              type: string
                               example: "ffafafa61fa5faf"
                             name:
                               type: string
