@@ -210,7 +210,7 @@ paths:
                           type: object
                           properties:
                             id:
-                              type: object
+                              type: string
                               example: "ffafafa61fa5faf"
                             name:
                               type: string
@@ -221,6 +221,105 @@ paths:
                   total:
                     type: number
                     example: 30
+        401:
+          description: Unauthorized - Invalid credentials
+        500:
+          description: Internal Server Error - Unable to process the request
+  /products/create:
+    post:
+      tags:
+        - products  
+      summary: Create New Product
+      operationId: createNewProduct
+      description: Create New Product
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          description: Bearer token
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+          format: JWT
+          required: true
+        - in: body
+          name: createNewProduct
+          description: Create New Product
+          required: true
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+                example: "Sữa"
+              productCode:
+                type: string
+                example: "2XJK"
+              unit:
+                type: string
+                example: "vnđ"
+              note:
+                type: string
+                example: "sữa tươi ngon không đường"
+              remainQuantity:
+                type: number
+                example: 20
+              productImage:
+                type: file
+                example: 'Image of the product'
+              price:
+                type: number
+                example: 20000
+              discountRate:
+                type: number
+                example: 2
+      responses:
+        200:
+          description: Successful
+          schema:
+            type: object
+            properties:
+              success:
+                type: number
+                example: 1
+              data:
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: "fdf31766-8090-4264-9925-22f638acce8d"
+                  name:
+                    type: string
+                    example: "Sua chua"
+                  productCode:
+                    type: string
+                    example: "2XJK"
+                  price:
+                    type: number
+                    example: 20000
+                  discountRate:
+                    type: number
+                    example: 1
+                  image:
+                    type: string
+                    example: "http://117.4.194.207:3002/image/a83bdd3485f1597fb48a9c2b234c863a.jpg"
+                  unit:
+                    type: string
+                    example: "vnd"
+                  remainQuanlity:
+                    type: number
+                    example: 20
+                  category:
+                          type: object
+                          properties:
+                            id:
+                              type: string
+                              example: "ffafafa61fa5faf"
+                            name:
+                              type: string
+                              example: "Sữa"
         401:
           description: Unauthorized - Invalid credentials
         500:
